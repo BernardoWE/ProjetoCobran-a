@@ -124,3 +124,25 @@ export const SelectCompanies = styled(Select)`
         border: none;
     } */
 `
+export const CardNotaCadastrada = styled.div`
+    background-color: #fff;
+    border: 1px solid #03030321;
+    border-collapse: collapse;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    p, h2{
+        margin: 0;
+    }
+    div:nth-child(2){
+        display: flex;
+        gap: 10px;
+        
+
+        
+    }
+`
+export const SelectNotas = styled(Select)`
+    
+`
