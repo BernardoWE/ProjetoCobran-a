@@ -1,7 +1,14 @@
- import { Container, Header, Page, Resume, ResumeCard, SpanResumeCard } from "./styles"
+ import { AddNota, Button, Container, Header, InputWrapper, Page, Resume, ResumeCard, SelectCompanies, SpanResumeCard } from "./styles"
 
 function App() {
-  
+  const options = [
+  { value: 'Odontomaster', label: 'Odontomaster' },
+  { value: 'Bhdental', label: 'Bhdental' },
+  { value: 'Dentemed', label: 'Dentemed' },
+  { value: 'Miamimed', label: 'Miamimed' },
+  { value: 'Betaniamed', label: 'Betaniamed' },
+  { value: 'Odontoprime', label: 'Odontoprime' },
+]
  
   return (
     <>
@@ -35,37 +42,58 @@ function App() {
                 <SpanResumeCard $status='cancelled'>Devolvida</SpanResumeCard>
               </ResumeCard>
             </Resume>
-            <section>
+            <AddNota>
               <form> {/* Ver se da para usar o react hook form */}
                 <h2>Adicionar nota fiscal</h2>
-                <div>
+                <InputWrapper>
                   <label htmlFor="">Numero da nota*</label>
                   <input type="number" placeholder="Ex: 123" />
-                </div>
-                <div>
+                </InputWrapper>
+                <InputWrapper>
                   <label htmlFor="">Cliente*</label>
                   <input type="text" placeholder="Nome do Cliente"/>
-                </div>
-                <div>
+                </InputWrapper>
+                <InputWrapper>
                   <label htmlFor="">Empresa*</label>
-                  <input type="" placeholder="Selecione..."/> {/* Usar react select */}
-                </div>
-                <div>
+                  <SelectCompanies 
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        backgroundColor: "#2cc6ec13",
+                        border: "1px solid #03030321",
+                        borderRadius: "10px",
+                        boxShadow: "none",
+                      }),
+                      input: (base) => ({
+                        ...base,
+                        color: "#030303",
+                      }),
+                      // singleValue: (base) => ({
+                      //   ...base,
+                      //   color: "#030303",
+                      // }),
+                    }}
+                    placeholder='Selecione uma empresa'
+                    options={options}
+                    menuPortalTarget={document.body}
+                  /> {/* Usar react select */}
+                </InputWrapper>
+                <InputWrapper>
                   <label htmlFor="">Valor R$ *</label>
                   <input type="number" placeholder="Ex: 1.500,00"/>
-                </div>
-                <div>
+                </InputWrapper>
+                <InputWrapper>
                   <label htmlFor="">Emissão *</label>
                   <input type="date"/>
-                </div>
-                <div>
+                </InputWrapper>
+                <InputWrapper>
                   <label htmlFor="">Previsão de entrega *</label>
                   <input type="date"/>
-                </div>
-                <button type="submit">Adicionar nota</button>
+                </InputWrapper>
+                <Button type="submit">Adicionar nota</Button>
                 
               </form>
-            </section>
+            </AddNota>
             <section>
               <h2>Notas cadastradas(4)</h2>
             </section>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Select from 'react-select'
 
 export const Container = styled.div`
     min-height: 100vh;
@@ -35,7 +36,7 @@ export const Resume = styled.section`
 `
 export const ResumeCard = styled.div`
     background-color: #fff;
-    border: 1px solid black;
+    border: 1px solid #03030321;
     border-collapse: collapse;
     border-radius: 10px;
     padding: 15px;
@@ -50,7 +51,7 @@ export const ResumeCard = styled.div`
     transition: box-shadow ease-in .2s;
     &:hover{
        /* -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.53);  */
-        box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.33);
+        box-shadow: 0px 2px 20px -10px rgba(0,0,0,0.33);
     }
 
 `
@@ -66,4 +67,60 @@ export const SpanResumeCard = styled.span`
     width: fit-content;
     font-size: smaller;
 
+`
+export const AddNota = styled.section`
+    background-color: #fff;
+    border: 1px solid #03030321;
+    border-collapse: collapse;
+    border-radius: 10px;
+    padding: 15px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    margin-top: 20px;
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+`
+export const InputWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    label{
+        font-weight: bolder;
+    }
+    input{
+        border: 1px solid #03030321;
+        background-color: #2cc6ec13;
+        border-radius: 10px;
+        padding: 10px;
+        
+    }
+
+`
+export const Button = styled.button`
+    background-color: #1969b4de;
+    color: #fff;
+    font-weight: bolder;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    &:hover{
+        opacity: .9;
+    }
+`
+export const SelectCompanies = styled(Select)`
+    /* border: 1px solid #03030321;
+    background-color: #2cc6ec13;
+    border-radius: 10px;
+    padding: 10px;
+    div{ 
+        background-color: #2cc6ec13;
+        border: none;
+    } */
 `
