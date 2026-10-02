@@ -3,5 +3,5 @@ export const formatPrice = (value) =>{
         style:'currency',
         currency:'BRL',
 
-    }).format(value/100)
+    }).format(value)
 }

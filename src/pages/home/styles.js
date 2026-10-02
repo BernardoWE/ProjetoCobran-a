@@ -91,13 +91,6 @@ export const InputWrapper = styled.div`
     label{
         font-weight: bolder;
     }
-    /* input{
-        border: 1px solid #03030321;
-        background-color: #2cc6ec13;
-        border-radius: 10px;
-        padding: 10px;
-        
-    } */
 
 `
 export const Input = styled.input`
@@ -121,14 +114,7 @@ export const Button = styled.button`
     }
 `
 export const SelectCompanies = styled(Select)`
-    /* border: 1px solid #03030321;
-    background-color: #2cc6ec13;
-    border-radius: 10px;
-    padding: 10px;
-    div{ 
-        background-color: #2cc6ec13;
-        border: none;
-    } */
+   
 `
 export const CardNotaCadastrada = styled.div`
     background-color: #fff;
