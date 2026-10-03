@@ -95,9 +95,9 @@ export const InputWrapper = styled.div`
 `
 export const Input = styled.input`
     border: 1px solid #03030321;
-        background-color: #2cc6ec13;
-        border-radius: 10px;
-        padding: 10px;
+    background-color: #2cc6ec13;
+    border-radius: 10px;
+    padding: 10px;
 `
 export const Button = styled.button`
     background-color: #1969b4de;
@@ -116,6 +116,11 @@ export const Button = styled.button`
 export const SelectCompanies = styled(Select)`
    
 `
+export const ContainerNotasCadastrada = styled.section`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`
 export const CardNotaCadastrada = styled.div`
     background-color: #fff;
     border: 1px solid #03030321;
@@ -124,15 +129,20 @@ export const CardNotaCadastrada = styled.div`
     padding: 15px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     p, h2{
         margin: 0;
     }
     div:nth-child(2){
         display: flex;
-        gap: 10px;
-        
-
-        
+        gap: 5px;
+    }
+    textarea{
+        border: 1px solid #03030321;
+        background-color: #2cc6ec13;
+        border-radius: 10px;
+        padding: 10px;
+        resize: none;
     }
 `
 export const SelectNotas = styled(Select)`

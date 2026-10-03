@@ -1,7 +1,7 @@
 import { Controller,useForm } from "react-hook-form";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { AddNota, Button, CardNotaCadastrada, Container, Header, Input, InputWrapper, Page, Resume, ResumeCard, SelectCompanies, SelectNotas, SpanErrorMessage, SpanResumeCard } from "./styles"
+import { AddNota, Button, CardNotaCadastrada, Container, ContainerNotasCadastrada, Header, Input, InputWrapper, Page, Resume, ResumeCard, SelectCompanies, SelectNotas, SpanErrorMessage, SpanResumeCard } from "./styles"
 import { formatDate } from "../../utils/formatDate";
 import { formatPrice } from "../../utils/formatPrice";
 import { useState } from "react";
@@ -31,7 +31,10 @@ function App() {
       .required("Empresa é obrigatório"),
     emissao: yup
     .string('Insira uma data valida')
-    .required('Emissão é obrigatório')
+    .required('Emissão é obrigatório'),
+    entrega: yup
+    .string('Insira uma data valida')
+    .required('Entrega é obrigatório')
   }).required();
 
   const options = [
@@ -141,7 +144,6 @@ function App() {
                 />
                 )}
                 />
-                
                 <SpanErrorMessage>{errors.empresa?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
@@ -180,12 +182,13 @@ function App() {
               <InputWrapper>
                 <label htmlFor="">Previsão de entrega *</label>
                 <Input type="date"  {...register("entrega")} />
-                <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
+                <SpanErrorMessage>{errors.entrega?.message}</SpanErrorMessage>
+                {/* Adicionar um botao ou um input para quando ja estiver entregue */}
               </InputWrapper>
               <Button type="submit">Adicionar nota</Button>
             </form>
           </AddNota>
-          <section>
+          <ContainerNotasCadastrada>
             <h2>Notas cadastradas({notas.length})</h2>
             {notas.map((nota) => (
               <CardNotaCadastrada key={nota.numero}>
@@ -199,7 +202,7 @@ function App() {
                   <p>Emitida em: {formatDate(nota.emissao)}</p>·
                   <p>Previsão de entrega: {formatDate(nota.entrega)}</p>·
                 </div>
-                <textarea name="" id=""></textarea>
+                <textarea></textarea>
                 <SelectNotas
                   options={status}
                   placeholder='Selecione...'
@@ -219,7 +222,7 @@ function App() {
                 ></SelectNotas>
               </CardNotaCadastrada>
             ))}
-          </section>
+          </ContainerNotasCadastrada>
 
 
         </Page>
