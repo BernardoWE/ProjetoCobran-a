@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Controller,useForm } from "react-hook-form";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { AddNota, Button, CardNotaCadastrada, Container, Header, Input, InputWrapper, Page, Resume, ResumeCard, SelectCompanies, SelectNotas, SpanErrorMessage, SpanResumeCard } from "./styles"
@@ -11,8 +11,11 @@ function App() {
 
   const schema = yup.object({
     numero: yup
-      .string()
-      .required("Número da nota é obrigatório"),
+      .number()
+      .typeError("O valor tem que ser um número")
+      .required("Numero da nota é obrigatório")
+      .integer('O valor tem que ser inteiro')
+      .positive("O valor deve ser maior que zero"),
 
     cliente: yup
       .string()
@@ -23,6 +26,12 @@ function App() {
       .typeError("O valor tem que ser um número")
       .required("Valor é obrigatório")
       .positive("O valor deve ser maior que zero"),
+    empresa: yup
+      .object()
+      .required("Empresa é obrigatório"),
+    emissao: yup
+    .string('Insira uma data valida')
+    .required('Emissão é obrigatório')
   }).required();
 
   const options = [
@@ -39,7 +48,7 @@ function App() {
     { value: 'Paga', label: 'Paga' },
     { value: 'Devolvida', label: 'Devolvida' }
   ]
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors }, control } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -97,7 +106,7 @@ function App() {
               <h2>Adicionar nota fiscal</h2>
               <InputWrapper>
                 <label htmlFor="">Numero da nota*</label>
-                <Input type="number" placeholder="Ex: 123"  {...register("numero")} />
+                <Input type="number" placeholder="Ex: 123" {...register("numero")} />
                 <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
@@ -107,7 +116,12 @@ function App() {
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Empresa*</label>
-                <SelectCompanies
+                <Controller
+                name="empresa"
+                control={control}
+                render={({field})=>(
+                  <SelectCompanies
+                  {...field}
                   styles={{
                     control: (base) => ({
                       ...base,
@@ -125,7 +139,10 @@ function App() {
                   options={options}
                   menuPortalTarget={document.body}
                 />
-                <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
+                )}
+                />
+                
+                <SpanErrorMessage>{errors.empresa?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Valor R$ *</label>
@@ -158,7 +175,7 @@ function App() {
               <InputWrapper>
                 <label htmlFor="">Emissão *</label>
                 <Input type="date"  {...register("emissao")} />
-                <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
+                <SpanErrorMessage>{errors.emissao?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Previsão de entrega *</label>
