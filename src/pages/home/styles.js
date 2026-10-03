@@ -138,3 +138,6 @@ export const CardNotaCadastrada = styled.div`
 export const SelectNotas = styled(Select)`
     
 `
+export const SpanErrorMessage = styled.span`
+
+`

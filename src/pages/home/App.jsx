@@ -1,12 +1,30 @@
-import { Controller, useForm } from "react-hook-form";
-import { AddNota, Button, CardNotaCadastrada, Container, Header, Input, InputWrapper, Page, Resume, ResumeCard, SelectCompanies, SelectNotas, SpanResumeCard } from "./styles"
-import { NumericFormat } from "react-number-format";
+import { useForm } from "react-hook-form";
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { AddNota, Button, CardNotaCadastrada, Container, Header, Input, InputWrapper, Page, Resume, ResumeCard, SelectCompanies, SelectNotas, SpanErrorMessage, SpanResumeCard } from "./styles"
 import { formatDate } from "../../utils/formatDate";
 import { formatPrice } from "../../utils/formatPrice";
 import { useState } from "react";
 import { useEffect } from "react";
 
 function App() {
+
+  const schema = yup.object({
+    numero: yup
+      .string()
+      .required("Número da nota é obrigatório"),
+
+    cliente: yup
+      .string()
+      .required("Cliente é obrigatório"),
+
+    valor: yup
+      .number()
+      .typeError("O valor tem que ser um número")
+      .required("Valor é obrigatório")
+      .positive("O valor deve ser maior que zero"),
+  }).required();
+
   const options = [
     { value: 'Odontomaster', label: 'Odontomaster' },
     { value: 'Bhdental', label: 'Bhdental' },
@@ -21,23 +39,15 @@ function App() {
     { value: 'Paga', label: 'Paga' },
     { value: 'Devolvida', label: 'Devolvida' }
   ]
-  const { register, handleSubmit, reset, control } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
 
   const [notas, setNotas] = useState([]);
 
   const onSubmit = (data) => {
-     const valor = Number(
-    data.valor
-      .replace("R$ ", "")
-      .replace(/\./g, "")
-      .replace(",", ".")
-  );
 
-  const novaNota = {
-    ...data,
-    valor,
-  };
-    const novasNotas = [...notas, novaNota];
+    const novasNotas = [...notas, data];
 
     setNotas(novasNotas);
 
@@ -49,6 +59,7 @@ function App() {
 
     setNotas(notasSalvas);
   }, []);
+
   return (
     <>
 
@@ -87,10 +98,12 @@ function App() {
               <InputWrapper>
                 <label htmlFor="">Numero da nota*</label>
                 <Input type="number" placeholder="Ex: 123"  {...register("numero")} />
+                <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Cliente*</label>
                 <Input type="text" placeholder="Nome do Cliente"  {...register("cliente")} />
+                <SpanErrorMessage>{errors.cliente?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Empresa*</label>
@@ -107,19 +120,19 @@ function App() {
                       ...base,
                       color: "#030303",
                     }),
-                    // singleValue: (base) => ({
-                    //   ...base,
-                    //   color: "#030303",
-                    // }),
                   }}
                   placeholder='Selecione uma empresa'
                   options={options}
                   menuPortalTarget={document.body}
-                /> {/* Usar react select */}
+                />
+                <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Valor R$ *</label>
-                <Controller
+                <Input type="number" step="0.01"{...register("valor", {
+                  valueAsNumber: true,
+                })}></Input>
+                {/* <Controller
                   name="valor"
                   control={control}
                   defaultValue=""
@@ -127,6 +140,9 @@ function App() {
                     <NumericFormat
                       {...field}
                       value={field.value || ""}
+                      // onValueChange={(values) => {
+                      //   field.onChange(values.floatValue);
+                      // }}
                       thousandSeparator="."
                       decimalSeparator=","
                       prefix="R$ "
@@ -136,15 +152,18 @@ function App() {
                       placeholder="Ex: R$ 1.500,00"
                     />
                   )}
-                />
+                /> */}
+                <SpanErrorMessage>{errors.valor?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Emissão *</label>
                 <Input type="date"  {...register("emissao")} />
+                <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
               </InputWrapper>
               <InputWrapper>
                 <label htmlFor="">Previsão de entrega *</label>
                 <Input type="date"  {...register("entrega")} />
+                <SpanErrorMessage>{errors.numero?.message}</SpanErrorMessage>
               </InputWrapper>
               <Button type="submit">Adicionar nota</Button>
             </form>
@@ -159,7 +178,7 @@ function App() {
                 </div>
                 <div>
                   <p>{nota.cliente}</p>·
-                  <p>{formatPrice( nota.valor)}</p>·
+                  <p>{formatPrice(nota.valor)}</p>·
                   <p>Emitida em: {formatDate(nota.emissao)}</p>·
                   <p>Previsão de entrega: {formatDate(nota.entrega)}</p>·
                 </div>
